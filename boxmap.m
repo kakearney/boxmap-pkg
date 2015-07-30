@@ -29,6 +29,12 @@ function [m, Lim, hax] = boxmap(latlim, lonlim, varargin)
 %   plot:       logical scalar, true to plot and false to simply return m
 %               and Lim outputs
 %
+%   dx:         minimum distance between points, in km, for drawing outline
+%               around region of interest [100]
+%
+%   npt:        number of points used to draw box (increase if corners are
+%               being cut off in your x/y limits [200]
+%
 % Output variables:
 %
 %   hax:        1 x 2 array of axis handles.  The first axis is the
@@ -59,6 +65,8 @@ Opt.ax = [];
 Opt.lontick = 1;
 Opt.lattick = 1;
 Opt.format = @(x) num2str(x, '%.2f');
+Opt.npt = 200;
+Opt.dx = 100; 
 
 Opt = parsepv(Opt, varargin);
 
@@ -75,11 +83,11 @@ m = defaultm(m);
 
 % Calculate box limits
 
-[tklat, tklon] = interpm(latlim([1 2 2 1 1]), lonlim([1 1 2 2 1]), km2deg(100), 'gc');
+[tklat, tklon] = interpm(latlim([1 2 2 1 1]), lonlim([1 1 2 2 1]), km2deg(Opt.dx), 'rh');
 [xlim, ylim] = mfwdtran(m, tklat, tklon);
 xlim = minmax(xlim);
 ylim = minmax(ylim);
-xybox = interparc(linspace(0,1,200), xlim([1 1 2 2 1]), ylim([1 2 2 1 1]), 'linear');
+xybox = interparc(linspace(0,1,Opt.npt), xlim([1 1 2 2 1]), ylim([1 2 2 1 1]), 'linear');
 
 [ltbox, lnbox] = minvtran(m, xybox(:,1), xybox(:,2));
 lnbox = wrapTo360(lnbox);
