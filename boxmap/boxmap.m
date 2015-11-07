@@ -3,15 +3,15 @@ function [m, Lim, hax] = boxmap(latlim, lonlim, varargin)
 %
 % [m, Lim, hax] = boxmap(latlim, lonlim, p1, v1, ...)
 %
-% This function plots sets up an exis to plot projected map data, but to
+% This function plots sets up an axis to plot projected map data, but to
 % maintain a rectangular plotting region.  It is primarily intended for
 % conical projections.
 %
 % Input variables:
 %
-%   latlim: desired latitude limits
+%   latlim:     desired latitude limits
 %
-%   lonlim: desired longitude limits
+%   lonlim:     desired longitude limits
 %
 % Optional input variables (passed as parameter/value pairs):
 %
