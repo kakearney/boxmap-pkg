@@ -47,8 +47,50 @@ if ~darismanual && ~pbarismanual
     
 else
 
-    dx = diff(get(h, 'XLim'));
-    dy = diff(get(h, 'YLim'));
+    xlim = get(h, 'XLim');
+    ylim = get(h, 'YLim');
+    
+    % Deal with axis limits auto-set via Inf/-Inf use
+    
+    if any(isinf([xlim ylim]))
+        hc = get(h, 'Children');
+        hc(~arrayfun( @(h) isprop(h, 'XData' ) & isprop(h, 'YData' ), hc)) = [];
+        xdata = get(hc, 'XData');
+        if iscell(xdata)
+            xdata = cellfun(@(x) x(:), xdata, 'uni', 0);
+            xdata = cat(1, xdata{:});
+        end
+        ydata = get(hc, 'YData');
+        if iscell(ydata)
+            ydata = cellfun(@(x) x(:), ydata, 'uni', 0);
+            ydata = cat(1, ydata{:});
+        end
+        isplotted = ~isinf(xdata) & ~isnan(xdata) & ...
+                    ~isinf(ydata) & ~isnan(ydata);
+        xdata = xdata(isplotted);
+        ydata = ydata(isplotted);
+        if isempty(xdata)
+            xdata = [0 1];
+        end
+        if isempty(ydata)
+            ydata = [0 1];
+        end
+        if isinf(xlim(1))
+            xlim(1) = min(xdata);
+        end
+        if isinf(xlim(2))
+            xlim(2) = max(xdata);
+        end
+        if isinf(ylim(1))
+            ylim(1) = min(ydata);
+        end
+        if isinf(ylim(2))
+            ylim(2) = max(ydata);
+        end
+    end
+
+    dx = diff(xlim);
+    dy = diff(ylim);
     dar = get(h, 'DataAspectRatio');
     pbar = get(h, 'PlotBoxAspectRatio');
 
@@ -85,7 +127,13 @@ end
 
 % Convert plot box position to the units used by the axis
 
-temp = axes('Units', 'Pixels', 'Position', pos, 'Visible', 'off', 'parent', get(h, 'parent'));
+hparent = get(h, 'parent');
+hfig = ancestor(hparent, 'figure'); % in case in panel or similar
+currax = get(hfig, 'currentaxes');
+
+temp = axes('Units', 'Pixels', 'Position', pos, 'Visible', 'off', 'parent', hparent);
 set(temp, 'Units', currunit);
 pos = get(temp, 'position');
 delete(temp);
+
+set(hfig, 'currentaxes', currax);
