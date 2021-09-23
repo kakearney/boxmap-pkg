@@ -62,7 +62,7 @@ end
 h.gpar = cellfun(@(x,y) plot(x,y, 'r'), xpar, ypar);
 h.gmer = cellfun(@(x,y) plot(x,y, 'r'), xmer, ymer);
 
-set([h.gpar h.gmer], 'color', rgb('light gray'), 'linewidth', 0.5, 'linestyle', '-');
+set([h.gpar h.gmer], 'color', [0.84706 0.86275 0.83922], 'linewidth', 0.5, 'linestyle', '-');
 
 % Grid line labels
 
