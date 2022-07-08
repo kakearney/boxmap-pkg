@@ -80,11 +80,15 @@ end
 for ii = 1:length(gln)
     [in,out] = intersect(pbox, [xmer{ii} ymer{ii}]);
     if ~isempty(in)
-        xmlbl(ii) = in(end,1); % last in is top
-        ymlbl(ii) = in(end,2); % last in is top
+%         xmlbl(ii) = in(end,1); % last in is top
+%         ymlbl(ii) = in(end,2); % last in is top
+        xmlbl(ii) = in(1,1); % last in is top
+        ymlbl(ii) = in(1,2); % last in is top
     end
 %     lblpt = [lblpt; intersect(in, out, 'rows')];
 end
+
+
 
 h.lblpar = text(xplbl+diff(h.ax.XLim)*0.005, yplbl, strrep(cellstr(angl2str(glt,'ns')),'^',''), 'horiz', 'left');
 h.lblmer = text(xmlbl, ymlbl, strrep(cellstr(angl2str(wrapTo180(gln),'ew')),'^',''), 'horiz', 'center', 'vert', 'top');
