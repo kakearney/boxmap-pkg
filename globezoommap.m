@@ -28,7 +28,7 @@ function h = globezoommap(ax, origin, zoomlev, roundlev)
 
 axes(ax);
 axesm('ortho', 'grid', 'on', 'origin', origin);
-setm(ax, 'MeridianLabel', 'off', 'ParallelLabel', 'off', 'frame', 'off', 'mlinelocation', 15, 'gcolor', rgb('light gray'));
+setm(ax, 'MeridianLabel', 'off', 'ParallelLabel', 'off', 'frame', 'off', 'mlinelocation', 15, 'gcolor', ones(1,3)*0.8);
 
 frm = findall(ax, 'tag', 'Frame');
 mer = findall(ax, 'tag', 'Meridian');
