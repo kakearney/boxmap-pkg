@@ -83,6 +83,8 @@ m = defaultm(m);
 
 % Calculate box limits
 
+minmax = @(x) [min(x(:)) max(x(:))];
+
 [tklat, tklon] = interpm(latlim([1 2 2 1 1]), lonlim([1 1 2 2 1]), km2deg(Opt.dx), 'rh');
 [xlim, ylim] = mfwdtran(m, tklat, tklon);
 xlim = minmax(xlim);

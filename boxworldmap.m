@@ -41,9 +41,8 @@ ybox = [h.ax.YLim mean(h.ax.YLim)];
 [xbox,ybox] = ndgrid(xbox, ybox);
 [ltbox, lnbox] = minvtran(xbox(:), ybox(:));
 
-ltlim2 = minmax(ltbox);
-lnlim2 = minmax(wrapTo360(lnbox));
-
+ltlim2 = [min(ltbox) max(ltbox)];
+lnlim2 = [min(wrapTo360(lnbox)) max(wrapTo360(lnbox))];
 
 [xpar, ypar] = deal(cell(size(glt)));
 for ip = 1:length(glt)
