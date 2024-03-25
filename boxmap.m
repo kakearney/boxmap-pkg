@@ -59,16 +59,18 @@ function [m, Lim, hax] = boxmap(latlim, lonlim, varargin)
 
 % Parse input
 
-Opt.proj = 'eqdconic';
-Opt.plot = true;
-Opt.ax = [];
-Opt.lontick = 1;
-Opt.lattick = 1;
-Opt.format = @(x) num2str(x, '%.2f');
-Opt.npt = 200;
-Opt.dx = 100; 
+p = inputParser;
+p.addParameter('proj', 'eqdconic');
+p.addParameter('plot', true);
+p.addParameter('ax', []);
+p.addParameter('lontick', 1);
+p.addParameter('lattick', 1);
+p.addParameter('format', @(x) num2str(x, '%.2f'));
+p.addParameter('npt', 200);
+p.addParameter('dx', 100);
+p.parse(varargin{:});
 
-Opt = parsepv(Opt, varargin);
+Opt = p.Results;
 
 if Opt.plot && isempty(Opt.ax)
     Opt.ax = gca;
