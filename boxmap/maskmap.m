@@ -46,8 +46,8 @@ b = bwboundaries(mm);
 bx = xmask(b{1}(:,2));
 by = ymask(b{1}(:,1));
 
-bxlim = minmax(bx);
-bylim = minmax(by);
+bxlim = [min(bx) max(bx)];
+bylim = [min(by) max(by)];
 
 bx = bxlim([1 1 2 2 1]);
 by = bylim([1 2 2 1 1]);
